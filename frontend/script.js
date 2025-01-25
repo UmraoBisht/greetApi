@@ -1,5 +1,3 @@
-
-
 const greetForm = document.getElementById("greetForm");
 const messageDiv = document.getElementById("message");
 
@@ -33,15 +31,18 @@ greetForm.addEventListener("submit", async (event) => {
   }
 });
 
-
 const fetchUsersButton = document.getElementById("fetchUsers");
 
 fetchUsersButton.addEventListener("click", async () => {
   const response = await fetch("http://localhost:3000/api/users");
   const data = await response.json();
+  if (data.length <= 0) {
+    messageDiv.innerHTML = "";
+    messageDiv.innerHTML += `<p>No users found</p>`;
+    return;
+  }
   data.map((user) => {
     messageDiv.innerHTML = "";
     messageDiv.innerHTML += `<p>Name: ${user.name}</br> Email: ${user.email}</p>`;
   });
 });
-
